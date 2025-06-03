@@ -1,0 +1,33 @@
+ @font-face {
+  font-family: 'Coolvetica';
+  src: url('/static/fonts/Coolvetica\ Rg.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Vendya';
+  src: url('/static/fonts/vendya.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Caviar Dreams';
+  src: url('/static/fonts/CaviarDreams.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gavoline';
+  src: url('/static/fonts/GavolineDemo.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Heavitas';
+  src: url('/static/fonts/Heavitas.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'LemonMilk';
+  src: url('/static/fonts/LEMONMILK-Regular.otf') format('opentype');
+}
+@font-face {
+  font-family: 'MoonTank';
+  src: url('/static/fonts/MOONTANK.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Vogue';
+  src: url('/static/fonts/Vogue.ttf') format('truetype');
+}

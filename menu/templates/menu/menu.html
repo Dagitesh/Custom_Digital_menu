@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Lobster&family=Montserrat&family=Poppins&family=Pacifico&family=Georgia&family=Times+New+Roman&family=Courier+New&family=Arial&family=Verdana&display=swap" rel="stylesheet">
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <style>
+        body {
+            background-image: url({{ config.background_image.url }});
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+        }
+        
+
+        .menu-wrapper {
+            display: flex;
+            justify-content: {% if config.menu_alignment == 'center' %}center{% else %}flex-start{% endif %};
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            padding: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;
+            margin: 20px;
+        }
+
+        .logo-container.center {
+            justify-content: center;
+        }
+
+        .logo-container.right {
+            justify-content: flex-end;
+        }
+
+        img.logo {
+            width: 120px;
+            max-width: 100%;
+        }
+
+        .category {
+            padding: 20px;
+            border-radius: 12px;
+
+        }
+
+        .menu-item {
+            margin-left: 10px;
+        }
+
+        .flex-container {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .column-direction {
+            flex-direction: column;
+        }
+
+        .row-direction {
+            flex-direction: row;
+        }
+
+        @media (max-width: 768px) {
+            .flex-container {
+                flex-direction: column !important;
+                align-items: stretch;
+            }
+
+            .menu {
+                padding: 15px;
+            }
+
+            .menu-item {
+                margin-left: 0;
+            }
+
+            .category {
+                padding: 10px;
+            }
+
+            img.logo {
+                width: 80px;
+            }
+           
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo-container {{ config.logo_position }}">
+    <img src="{{ config.logo.url }}" alt="Logo" class="logo">
+</div>
+
+<div class="menu-wrapper">
+    
+    <div class="menu">
+        
+        {% for category in config.categories.all %}
+        
+            <div class="category" style="font-family: {{ category.font_family|default:'Roboto' }}, sans-serif; font-size: {{ category.font_size|default:'18px' }}; color: {{ category.color }};">
+                {% if category.image %}
+                    <div class="flex-container {% if category.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
+                        <img src="{{ category.image.url }}" alt="{{ category.name }}" width="150">
+                        <h2>{{ category.name }}</h2>
+                    </div>
+                {% else %}
+                    <h2>{{ category.name }}</h2>
+                {% endif %}
+
+                {% for item in category.items.all %}
+                    <div class="menu-item" style="font-family: '{{ item.font_family }}'; font-size: {{ item.font_size }}px; color: {{ item.color }}; margin-bottom: 15px;">
+                        <div class="flex-container {% if item.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
+                            {% if item.image %}
+                                <img src="{{ item.image.url }}" alt="{{ item.name }}" width="100">
+                            {% endif %}
+                            <div style="display: flex; align-items: flex-end;">
+                                <div>
+                                    <h3 style="margin: 0; line-height: 1;">{{ item.name }}</h3>
+                                    <p style="margin: 2px 0 0 0; font-size: 0.85em; color: #757575;">{{ item.description }}</p>
+                                </div>
+                                <p style="margin: 0 0 0 10px;">-------------------------------</p>
+                                <p style="margin: 0 0 0 10px;"><strong>{{ item.price }} birr</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
