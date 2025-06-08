@@ -1,14 +1,9 @@
 {
     "version": 2,
     "builds": [
-        { "src": "manage.py", "use": "@vercel/python" }
+        { "src": "vercel_wsgi.py", "use": "@vercel/python" }
     ],
     "routes": [
-        { "src": "/(.*)", "dest": "manage.py" }
-    ],
-    "functions": {
-        "api/my-function.js": {
-            "excludeFiles": "node_modules/your-large-lib/**"
-        }
-    }
+        { "src": "/(.*)", "dest": "vercel_wsgi.py" }
+    ]
 }
