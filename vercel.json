@@ -5,5 +5,10 @@
     ],
     "routes": [
         { "src": "/(.*)", "dest": "manage.py" }
-    ]
+    ],
+    "functions": {
+        "api/my-function.js": {
+            "excludeFiles": "node_modules/your-large-lib/**"
+        }
+    }
 }
