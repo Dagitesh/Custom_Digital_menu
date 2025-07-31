@@ -56,6 +56,10 @@ class MenuConfig(models.Model):
     layout = models.CharField(max_length=10, choices=LAYOUT_CHOICES, default='column')
     logo_position = models.CharField(max_length=10, choices=LOGO_POSITION_CHOICES, default='left')
     menu_alignment = models.CharField(max_length=10, choices=MENU_ALIGNMENT_CHOICES, default='left')
+    title_text = models.CharField(max_length=100, default="Menu")
+    title_font_family = models.CharField(max_length=100, choices=FONT_CHOICES, default='Roboto')
+    title_font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='20px')
+    title_color = ColorField(default='#000000')
 
     def __str__(self):
         return f"Menu Config #{self.id}"

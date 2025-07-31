@@ -18,17 +18,20 @@
         
 
         .menu-wrapper {
-            display: flex;
-            justify-content: {% if config.menu_alignment == 'center' %}center{% else %}flex-start{% endif %};
+            width: 100%;
+            box-sizing: border-box;
+            
         }
 
         .menu {
-            display: flex;
-            flex-direction: column;
-            gap: 40px;
-            padding: 30px;
+            max-width: 800px;
             width: 100%;
-            max-width: 1200px;
+            padding: 30px;
+            box-sizing: border-box;
+            
+        }
+        .menu.center {
+            margin: 0 auto;
         }
 
         .logo-container {
@@ -107,8 +110,12 @@
 
 <div class="menu-wrapper">
     
-    <div class="menu">
-        
+    <div class="menu {% if config.menu_alignment == 'center' %}center{% endif %}">
+        <h1 style="
+    font-family: {{ config.title_font_family }};
+    font-size: {{ config.title_font_size }};
+    color: {{ config.title_color }};">
+    {{ config.title_text }}</h1>
         {% for category in config.categories.all %}
         
             <div class="category" style="font-family: {{ category.font_family|default:'Roboto' }}, sans-serif; font-size: {{ category.font_size|default:'18px' }}; color: {{ category.color }};">
