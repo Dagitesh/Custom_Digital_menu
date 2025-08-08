@@ -14,19 +14,20 @@ FONT_CHOICES = [
     ("Lobster", "Lobster"),
     ("Pacifico", "Pacifico"),
     ("Vendya", "Vendya"),
-    ('Caviar Dreams', 'Caviar Dreams'),
-    ("Gavoline","Gavoline"),
+    ("Caviar Dreams", "Caviar Dreams"),
+    ("Gavoline", "Gavoline"),
     ("Heavitas", "Heavitas"),
-    ("LemonMilk","LemonMilk"),
+    ("LemonMilk", "LemonMilk"),
     ("MoonTank", "MoonTank"),
     ("Vogue", "Vogue"),
 ]
 
 FONT_SIZE_CHOICES = [
-    ("14px", "Small"),
-    ("16px", "Normal"),
-    ("20px", "Large"),
-    ("24px", "Extra Large"),
+    ("25px", "Small"),
+    ("45px", "Normal"),
+    ("65px", "Large"),
+    ("85px", "Extra Large"),
+    ("105px", "XXL"),  
 ]
 
 LOGO_POSITION_CHOICES = [
@@ -45,6 +46,12 @@ IMAGE_POSITION_CHOICES = [
     ('left', 'Left'),
 ]
 
+CATEGORY_POSITION_CHOICES = [
+    ('left', 'Left'),
+    ('center', 'Center'),
+    ('right', 'Right'),
+]
+
 class MenuConfig(models.Model):
     LAYOUT_CHOICES = [
         ('column', 'Column'),
@@ -58,7 +65,7 @@ class MenuConfig(models.Model):
     menu_alignment = models.CharField(max_length=10, choices=MENU_ALIGNMENT_CHOICES, default='left')
     title_text = models.CharField(max_length=100, default="Menu")
     title_font_family = models.CharField(max_length=100, choices=FONT_CHOICES, default='Roboto')
-    title_font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='20px')
+    title_font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='45px')
     title_color = ColorField(default='#000000')
 
     def __str__(self):
@@ -69,9 +76,10 @@ class Category(models.Model):
     config = models.ForeignKey(MenuConfig, on_delete=models.CASCADE, related_name='categories')
     color = ColorField(default='#000000')
     font_family = models.CharField(max_length=100, choices=FONT_CHOICES, default='Roboto')
-    font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='16px')
+    font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='45px')  # matches choices
     image = CloudinaryField('category_image', blank=True, null=True)
     image_position = models.CharField(max_length=10, choices=IMAGE_POSITION_CHOICES, default='top')
+    position = models.CharField(max_length=10, choices=CATEGORY_POSITION_CHOICES, default='center')  # will show in admin
 
     def __str__(self):
         return self.name
@@ -84,7 +92,7 @@ class MenuItem(models.Model):
     image = CloudinaryField('menu_item_image', blank=True, null=True)
     image_position = models.CharField(max_length=10, choices=IMAGE_POSITION_CHOICES, default='top')
     font_family = models.CharField(max_length=100, choices=FONT_CHOICES, default='Roboto')
-    font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='16px')
+    font_size = models.CharField(max_length=10, choices=FONT_SIZE_CHOICES, default='45px')  # matches choices
     color = ColorField(default='#000000')
 
     def __str__(self):

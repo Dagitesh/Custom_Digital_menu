@@ -140,7 +140,5 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-print("Cloudinary Config:")
-print("Cloud Name:", os.getenv('CLOUDINARY_CLOUD_NAME'))
-print("API Key:", os.getenv('CLOUDINARY_API_KEY'))
-print("API Secret:", os.getenv('CLOUDINARY_API_SECRET'))
+
+print("Image Cloud Name:", os.getenv('CLOUDINARY_CLOUD_NAME'))

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Menu</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> {% load static %}
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Open+Sans&family=Lobster&family=Montserrat&family=Poppins&family=Pacifico&family=Georgia&family=Times+New+Roman&family=Courier+New&family=Arial&family=Verdana&display=swap" rel="stylesheet">
-    {% load static %}
-<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
     <style>
         body {
-            background-image: url({{ config.background_image.url }});
+            background-image: url('{{ config.background_image.url }}');
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -16,139 +16,177 @@
             padding: 0;
         }
         
-
         .menu-wrapper {
             width: 100%;
             box-sizing: border-box;
-            
         }
-
+        
         .menu {
             max-width: 800px;
             width: 100%;
             padding: 30px;
             box-sizing: border-box;
-            
         }
+        
         .menu.center {
             margin: 0 auto;
         }
-
+        /* Logo placement */
+        
         .logo-container {
             display: flex;
             justify-content: flex-start;
             margin: 20px;
         }
-
+        
         .logo-container.center {
             justify-content: center;
         }
-
+        
         .logo-container.right {
             justify-content: flex-end;
         }
-
+        
         img.logo {
             width: 120px;
             max-width: 100%;
         }
-
+        /* Category block */
+        
         .category {
             padding: 20px;
             border-radius: 12px;
-
         }
-
+        
+        .category.left {
+            text-align: left;
+        }
+        
+        .category.center {
+            text-align: center;
+        }
+        
+        .category.right {
+            text-align: right;
+        }
+        /* Items layout */
+        
         .menu-item {
-            margin-left: 10px;
+            margin: 10px 0;
         }
-
+        
         .flex-container {
             display: flex;
             gap: 10px;
             align-items: flex-start;
         }
-
+        
         .column-direction {
             flex-direction: column;
         }
-
+        
         .row-direction {
             flex-direction: row;
         }
-
+        /* Item details */
+        
+        .item-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .item-description {
+            margin: 2px 0 0;
+            font-size: 0.85em;
+            color: #757575;
+        }
+        
+        .item-price {
+            white-space: nowrap;
+            margin-left: auto;
+        }
+        
+        .price-separator {
+            flex: 1;
+            border-bottom: 1px dotted #999;
+            margin: 0 10px;
+        }
+        
         @media (max-width: 768px) {
             .flex-container {
                 flex-direction: column !important;
                 align-items: stretch;
             }
-
             .menu {
                 padding: 15px;
             }
-
-            .menu-item {
-                margin-left: 0;
-            }
-
             .category {
                 padding: 10px;
             }
-
             img.logo {
                 width: 80px;
             }
-           
         }
     </style>
 </head>
+
 <body>
 
-<div class="logo-container {{ config.logo_position }}">
-    <img src="{{ config.logo.url }}" alt="Logo" class="logo">
-</div>
+    <div class="logo-container {{ config.logo_position }}">
+        <img src="{{ config.logo.url }}" alt="Logo" class="logo">
+    </div>
 
-<div class="menu-wrapper">
-    
-    <div class="menu {% if config.menu_alignment == 'center' %}center{% endif %}">
-        <h1 style="
-    font-family: {{ config.title_font_family }};
-    font-size: {{ config.title_font_size }};
-    color: {{ config.title_color }};">
-    {{ config.title_text }}</h1>
-        {% for category in config.categories.all %}
-        
-            <div class="category" style="font-family: {{ category.font_family|default:'Roboto' }}, sans-serif; font-size: {{ category.font_size|default:'18px' }}; color: {{ category.color }};">
+    <div class="menu-wrapper">
+        <div class="menu {% if config.menu_alignment == 'center' %}center{% endif %}">
+            <h1 style="
+            font-family: '{{ config.title_font_family }}', sans-serif;
+            font-size: {{ config.title_font_size }};
+            color: {{ config.title_color }};
+        ">
+                {{ config.title_text }}
+            </h1>
+
+            {% for category in config.categories.all %}
+            <div class="category {{ category.position }}" style="font-family: '{{ category.font_family }}', sans-serif;
+                        font-size: {{ category.font_size }};
+                        color: {{ category.color }};">
+
                 {% if category.image %}
-                    <div class="flex-container {% if category.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
-                        <img src="{{ category.image.url }}" alt="{{ category.name }}" width="150">
-                        <h2>{{ category.name }}</h2>
-                    </div>
-                {% else %}
+                <div class="flex-container {% if category.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" width="150">
                     <h2>{{ category.name }}</h2>
-                {% endif %}
+                </div>
+                {% else %}
+                <h2>{{ category.name }}</h2>
+                {% endif %} {% for item in category.items.all %}
+                <div class="menu-item" style="font-family: '{{ item.font_family }}', sans-serif;
+                                font-size: {{ item.font_size }};
+                                color: {{ item.color }};">
 
-                {% for item in category.items.all %}
-                    <div class="menu-item" style="font-family: '{{ item.font_family }}'; font-size: {{ item.font_size }}px; color: {{ item.color }}; margin-bottom: 15px;">
-                        <div class="flex-container {% if item.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
-                            {% if item.image %}
-                                <img src="{{ item.image.url }}" alt="{{ item.name }}" width="100">
-                            {% endif %}
-                            <div style="display: flex; align-items: flex-end;">
-                                <div>
-                                    <h3 style="margin: 0; line-height: 1;">{{ item.name }}</h3>
-                                    <p style="margin: 2px 0 0 0; font-size: 0.85em; color: #757575;">{{ item.description }}</p>
-                                </div>
-                                <p style="margin: 0 0 0 10px;">-------------------------------</p>
-                                <p style="margin: 0 0 0 10px;"><strong>{{ item.price }} birr</strong></p>
+                    <div class="flex-container {% if item.image_position == 'top' %}column-direction{% else %}row-direction{% endif %}">
+                        {% if item.image %}
+                        <img src="{{ item.image.url }}" alt="{{ item.name }}" width="100"> {% endif %}
+                        <div class="item-details">
+                            <div>
+                                <h3 style="margin: 0; line-height: 1;">{{ item.name }}</h3>
+                                {% if item.description %}
+                                <p class="item-description">{{ item.description }}</p>
+                                {% endif %}
                             </div>
+                            <div class="price-separator"></div>
+                            <div class="item-price"><strong>{{ item.price }} birr</strong></div>
                         </div>
                     </div>
+                </div>
                 {% endfor %}
             </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
 
 </body>
+
 </html>
